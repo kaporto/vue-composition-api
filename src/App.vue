@@ -1,18 +1,31 @@
 <script>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
 export default{
   setup(){
     const message = ref("Hello")
     const quantity = ref(1)
+    const item = reactive({
+      name: "Product 1",
+      price: 10
+    })
 
     const increment = () => quantity.value++
     const decrement = () => quantity.value--
+
+    const swapProduct = () => {
+      item.name = "Product A"
+      item.price = 30
+    }
+
+
     return {
       message,
       quantity,
       increment,
-      decrement
+      decrement,
+      item,
+      swapProduct
     }
   }
 }
@@ -20,7 +33,8 @@ export default{
 </script>
 
 <template>
-  <h1>{{message}}</h1>
+  <h1>{{ item.name }} : {{ item.price }}</h1>
+  <button class="button" @click="swapProduct">Swap product</button>
   <h2>{{ quantity}}</h2>
   <button class="button" @click="increment">+</button>
   <button class="button" @click="decrement">-</button>
