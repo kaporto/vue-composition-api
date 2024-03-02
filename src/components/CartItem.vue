@@ -4,39 +4,33 @@ import { computed, reactive, toRefs } from 'vue'
 export default {
     props: {
 
-        cartItem:{
+        cartItem: {
             type: Object,
             required: true
         }
     },
-    setup(props) {
-
-        
+    emits: 'remove',
+    setup(props, {emit}) {
 
         const item = reactive(props.cartItem)
 
         const increment = () => item.quantity++
-        const decrement = () => item.quantity--
-
-        const swapProduct = () => {
-            item.name = "Product A"
-            item.price = 30
-            item.quantity = 2
-        }
-
+        const decrement = () => item.quantity--   
 
         const total = computed(() => item.price * item.quantity)
 
         const { name, price, quantity } = toRefs(item);
 
+        const remove = () => emit('remove',item)
+
         return {
             increment,
             decrement,
-            swapProduct,
             name,
             price,
             quantity,
-            total
+            total,
+            remove
         }
     }
 }
@@ -45,11 +39,11 @@ export default {
 
 <template>
     <h1>{{ name }} : {{ price }} : {{ quantity }}</h1>
-    <button class="button" @click="swapProduct">Swap product</button>
-    <button class="button" @click="price++">Increment price</button>
-    <h2>{{ quantity }}</h2>
+
     <button class="button" @click="increment">+</button>
     <button class="button" @click="decrement">-</button>
+    <br>
+    <button class="button" @click="remove">Remove</button>
 
     <h3>Total: {{ total }}</h3>
 </template>

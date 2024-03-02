@@ -16,8 +16,11 @@ export default {
       }
     ])
 
+    const handleRemove = (data) => items.value.splice(0,1)
+
     return {
-      items
+      items,
+      handleRemove
     }
 
   }
@@ -25,7 +28,7 @@ export default {
 </script>
 
 <template>
-  <CartItem v-for="item in items" :cart-item="item" :key="item"></CartItem>
+  <CartItem v-for="item in items" :cart-item="item" :key="item" @remove="handleRemove"></CartItem>
 </template>
 
 <style scoped></style>
