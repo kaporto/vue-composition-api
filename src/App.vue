@@ -1,5 +1,5 @@
 <script>
-import { computed, ref, reactive, toRef, toRefs } from 'vue'
+import { computed, ref, reactive, toRef, toRefs, watch, watchEffect } from 'vue'
 
 export default {
   setup() {
@@ -25,6 +25,20 @@ export default {
 
     const { name, price, quantity } = toRefs(item);
 
+    /*watch(total,(newValue,oldValue)=>{
+      console.log('newValue:', newValue);
+      console.log('oldValue:', oldValue);
+    }, {immediate:true})*/
+
+    watch(() => item.quantity, () => {
+      if(item.quantity == 5){
+        alert("you cannot add more item");
+      }
+    }, {immediate:true})
+
+    watchEffect(() => {
+      console.log('Price changed: ', item.price);
+    })
 
     return {
       message,
